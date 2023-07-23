@@ -1,9 +1,23 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaBtc, FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '../hooks/useAuth';
+import { useAppDispatch } from '../store/hooks';
+import { logout } from '../store/user/userSlice';
+import { removeTokenFromLocalStorage } from '../helpers/localstorage.helper';
+import { toast } from 'react-toastify';
 
 export const Header: React.FC = () => {
-  const isAuth = false;
+  const isAuth = useAuth();
+	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
+
+	const logoutHandler = () => {
+		dispatch(logout())
+		removeTokenFromLocalStorage('token')
+		toast.success('You logged out.')
+		navigate('/')
+	}
 
   return (
     <header className="flex items-center p-4 shadow-sm bg-slate-800 backdrop-blur-sm">
@@ -12,7 +26,7 @@ export const Header: React.FC = () => {
       </Link>
 
       {isAuth && (
-        <nav className='ml-auto mr-10'>
+        <nav className="ml-auto mr-10">
           <ul className="flex items-center gap-5 ">
             <li>
               <NavLink
@@ -48,19 +62,19 @@ export const Header: React.FC = () => {
         </nav>
       )}
 
-
-			{
-				isAuth ? (
-					<button className='btn btn-red'>
-						<span>Log Out</span>
-						<FaSignOutAlt/>
-					</button>
-				) : (
-					<Link className='py-2 text-white/50 hover:text-white ml-auto' to={'auth'}>
-						Log In / Sign In
-					</Link>
-				)
-			}
+      {isAuth ? (
+        <button onClick={logoutHandler} className="btn btn-red">
+          <span>Log Out</span>
+          <FaSignOutAlt />
+        </button>
+      ) : (
+        <Link
+          className="py-2 text-white/50 hover:text-white ml-auto"
+          to={'auth'}
+        >
+          Log In / Sign In
+        </Link>
+      )}
     </header>
   );
 };
