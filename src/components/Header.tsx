@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaBtc, FaSignOutAlt } from 'react-icons/fa';
 
 export const Header: React.FC = () => {
-  const isAuth = true;
+  const isAuth = false;
 
   return (
     <header className="flex items-center p-4 shadow-sm bg-slate-800 backdrop-blur-sm">
