@@ -11,7 +11,7 @@ interface ICategoryModal {
 export const CategoryModal: React.FC<ICategoryModal> = ({
   type,
   id,
-	title,
+	title = '',
   setVisibleModal,
 }) => {
 	const [titleInput, setTitleInput] = useState(title);
