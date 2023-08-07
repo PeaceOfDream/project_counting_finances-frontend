@@ -1,8 +1,10 @@
 import React from 'react';
 import { TransactionForm } from '../components/TransactionForm';
 import { instance } from '../api/axios.api';
-import { ICategory, IResponseTransactionLoader } from '../api/types/types';
-import { useLoaderData } from 'react-router-dom';
+import { ICategory } from '../api/types/types';
+import { toast } from 'react-toastify';
+import { TransactionTable } from '../components/TransactionTable';
+
 
 
 
@@ -16,6 +18,25 @@ export const transactionLoader = async () => {
 }
 
 export const transactionAction = async ({request}:any) => {
+	switch(request.method) {
+		case "POST": {
+			const formData = await request.formData()
+			const newTransaction = {
+        title: formData.get('title'),
+        amount: +formData.get('amount'),
+        category: formData.get('category'),
+        type: formData.get('type'),
+      };
+
+			await instance.post('/transactions', newTransaction)
+			toast.success('Transaction added')
+		}
+		case "DELETE": {
+
+		}
+	}
+
+
   const data = {};
   return data;
 };
@@ -52,7 +73,9 @@ export const Transactions: React.FC = () => {
         </div>
       </div>
 
-      <h1 className="my-5">Table</h1>
+      <h1 className="my-5">
+				<TransactionTable/>
+			</h1>
     </>
   );
 };
