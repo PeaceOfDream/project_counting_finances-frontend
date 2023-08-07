@@ -6,6 +6,10 @@ import { Transactions } from '../pages/Transactions';
 import { Categories, categoriesAction, categoryLoader } from '../pages/Categories';
 import { Auth } from '../pages/Auth';
 import { ProtectedRoute } from '../components/ProtectedRoute';
+import {
+  transactionLoader,
+  transactionAction,
+} from '../pages/Transactions';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +23,8 @@ export const router = createBrowserRouter([
       },
       {
         path: 'transactions',
+				loader: transactionLoader,
+				action: transactionAction,
         element: (
           <ProtectedRoute>
             <Transactions />
