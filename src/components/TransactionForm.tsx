@@ -70,6 +70,7 @@ export const TransactionForm: React.FC = () => {
         <div className="flex gap-4 items-center">
           <label className="cursor-pointer flex items-center gap-2">
             <input
+						required
               type="radio"
               name="type"
               value={'income'}
@@ -79,6 +80,7 @@ export const TransactionForm: React.FC = () => {
           </label>
           <label className="cursor-pointer flex items-center gap-2">
             <input
+						required
               type="radio"
               name="type"
               value={'expense'}
