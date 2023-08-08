@@ -11,8 +11,11 @@ import { TransactionTable } from '../components/TransactionTable';
 
 export const transactionLoader = async () => {
 	const categories = await instance.get<ICategory>('/categories')
+	const transactions = await instance.get('/transactions')
+
 	const data = {
 		categories: categories.data,
+		transactions: transactions.data
 	}
 	return data
 }
@@ -32,7 +35,12 @@ export const transactionAction = async ({request}:any) => {
 			toast.success('Transaction added')
 		}
 		case "DELETE": {
+			const formData = await request.formData()
+			const transactionId = formData.get('id')
 
+			await instance.delete(`/transactions/transaction/${transactionId}`)
+			toast.success('Transaction deleted')
+			return null
 		}
 	}
 
